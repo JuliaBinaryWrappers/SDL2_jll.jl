@@ -12,6 +12,7 @@ using Libglvnd_jll
 PATH = ""
 LIBPATH = ""
 LIBPATH_env = "PATH"
+LIBPATH_default = ""
 
 # Relative path to `libsdl2`
 const libsdl2_splitpath = ["bin", "SDL2.dll"]

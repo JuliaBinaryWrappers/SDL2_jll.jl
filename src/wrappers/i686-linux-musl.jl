@@ -12,6 +12,7 @@ using Libglvnd_jll
 PATH = ""
 LIBPATH = ""
 LIBPATH_env = "LD_LIBRARY_PATH"
+LIBPATH_default = ""
 
 # Relative path to `libsdl2`
 const libsdl2_splitpath = ["lib", "libSDL2.so"]

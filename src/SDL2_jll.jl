@@ -11,7 +11,7 @@ if VERSION < v"1.3.0-rc4"
     # if they are willing to engage in the kinds of hoop-jumping they might need
     # to in order to install binaries in a JLL-compatible way on 1.0-1.2. One
     # example of this hoop-jumping being to express a dependency on this JLL
-    # package, then import it wtihin a `VERSION >= v"1.3"` conditional, and use
+    # package, then import it within a `VERSION >= v"1.3"` conditional, and use
     # the deprecated `build.jl` mechanism to download the binaries through e.g.
     # `BinaryProvider.jl`.  This should work well for the simplest packages, and
     # require greater and greater heroics for more and more complex packages.
@@ -34,7 +34,7 @@ artifacts = Pkg.Artifacts.load_artifacts_toml(artifacts_toml; pkg_uuid=UUID("ab8
 platforms = [Pkg.Artifacts.unpack_platform(e, "SDL2", artifacts_toml) for e in artifacts["SDL2"]]
 
 # Filter platforms based on what wrappers we've generated on-disk
-platforms = filter(p -> isfile(joinpath(@__DIR__, "wrappers", triplet(p) * ".jl")), platforms)
+filter!(p -> isfile(joinpath(@__DIR__, "wrappers", replace(triplet(p), "arm-" => "armv7l-") * ".jl")), platforms)
 
 # From the available options, choose the best platform
 best_platform = select_platform(Dict(p => triplet(p) for p in platforms))
@@ -43,7 +43,10 @@ best_platform = select_platform(Dict(p => triplet(p) for p in platforms))
 if best_platform === nothing
     @debug("Unable to load SDL2; unsupported platform $(triplet(platform_key_abi()))")
 else
-    # Load the appropriate wrapper
+    # Load the appropriate wrapper.  Note that on older Julia versions, we still
+    # say "arm-linux-gnueabihf" instead of the more correct "armv7l-linux-gnueabihf",
+    # so we manually correct for that here:
+    best_platform = replace(best_platform, "arm-" => "armv7l-")
     include(joinpath(@__DIR__, "wrappers", "$(best_platform).jl"))
 end
 

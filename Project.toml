@@ -1,6 +1,6 @@
 name = "SDL2_jll"
 uuid = "ab825dc5-c88e-5901-9575-1e5e20358fcf"
-version = "2.0.10+1"
+version = "2.0.12+0"
 
 [deps]
 Libglvnd_jll = "7e76a0d4-f3c7-5321-8279-8d96eeed0f29"

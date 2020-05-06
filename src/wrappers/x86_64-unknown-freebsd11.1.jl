@@ -12,6 +12,7 @@ using Libglvnd_jll
 PATH = ""
 LIBPATH = ""
 LIBPATH_env = "LD_LIBRARY_PATH"
+LIBPATH_default = ""
 
 # Relative path to `libsdl2`
 const libsdl2_splitpath = ["lib", "libSDL2.so"]
@@ -24,7 +25,7 @@ libsdl2_path = ""
 libsdl2_handle = C_NULL
 
 # This must be `const` so that we can use it with `ccall()`
-const libsdl2 = "libSDL2-2.0.so.10"
+const libsdl2 = "libSDL2-2.0.so.12"
 
 
 """

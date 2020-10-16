@@ -9,52 +9,15 @@ using Xorg_libXrandr_jll
 using Xorg_libXScrnSaver_jll
 using Libglvnd_jll
 using alsa_jll
-## Global variables
-PATH = ""
-LIBPATH = ""
-LIBPATH_env = "LD_LIBRARY_PATH"
-LIBPATH_default = ""
-
-# Relative path to `libsdl2`
-const libsdl2_splitpath = ["lib", "libSDL2.so"]
-
-# This will be filled out by __init__() for all products, as it must be done at runtime
-libsdl2_path = ""
-
-# libsdl2-specific global declaration
-# This will be filled out by __init__()
-libsdl2_handle = C_NULL
-
-# This must be `const` so that we can use it with `ccall()`
-const libsdl2 = "libSDL2-2.0.so.0"
-
-
-"""
-Open all libraries
-"""
+JLLWrappers.@generate_wrapper_header("SDL2")
+JLLWrappers.@declare_library_product(libsdl2, "libSDL2-2.0.so.0")
 function __init__()
-    global artifact_dir = abspath(artifact"SDL2")
+    JLLWrappers.@generate_init_header(Xorg_libX11_jll, Xorg_libXcursor_jll, Xorg_libXext_jll, Xorg_libXinerama_jll, Xorg_libXrandr_jll, Xorg_libXScrnSaver_jll, Libglvnd_jll, alsa_jll)
+    JLLWrappers.@init_library_product(
+        libsdl2,
+        "lib/libSDL2.so",
+        RTLD_LAZY | RTLD_DEEPBIND,
+    )
 
-    # Initialize PATH and LIBPATH environment variable listings
-    global PATH_list, LIBPATH_list
-    # From the list of our dependencies, generate a tuple of all the PATH and LIBPATH lists,
-    # then append them to our own.
-    foreach(p -> append!(PATH_list, p), (Xorg_libX11_jll.PATH_list, Xorg_libXcursor_jll.PATH_list, Xorg_libXext_jll.PATH_list, Xorg_libXinerama_jll.PATH_list, Xorg_libXrandr_jll.PATH_list, Xorg_libXScrnSaver_jll.PATH_list, Libglvnd_jll.PATH_list, alsa_jll.PATH_list,))
-    foreach(p -> append!(LIBPATH_list, p), (Xorg_libX11_jll.LIBPATH_list, Xorg_libXcursor_jll.LIBPATH_list, Xorg_libXext_jll.LIBPATH_list, Xorg_libXinerama_jll.LIBPATH_list, Xorg_libXrandr_jll.LIBPATH_list, Xorg_libXScrnSaver_jll.LIBPATH_list, Libglvnd_jll.LIBPATH_list, alsa_jll.LIBPATH_list,))
-
-    global libsdl2_path = normpath(joinpath(artifact_dir, libsdl2_splitpath...))
-
-    # Manually `dlopen()` this right now so that future invocations
-    # of `ccall` with its `SONAME` will find this path immediately.
-    global libsdl2_handle = dlopen(libsdl2_path)
-    push!(LIBPATH_list, dirname(libsdl2_path))
-
-    # Filter out duplicate and empty entries in our PATH and LIBPATH entries
-    filter!(!isempty, unique!(PATH_list))
-    filter!(!isempty, unique!(LIBPATH_list))
-    global PATH = join(PATH_list, ':')
-    global LIBPATH = join(vcat(LIBPATH_list, [joinpath(Sys.BINDIR, Base.LIBDIR, "julia"), joinpath(Sys.BINDIR, Base.LIBDIR)]), ':')
-
-    
+    JLLWrappers.@generate_init_footer()
 end  # __init__()
-

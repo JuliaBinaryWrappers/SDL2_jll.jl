@@ -1,6 +1,6 @@
 name = "SDL2_jll"
 uuid = "ab825dc5-c88e-5901-9575-1e5e20358fcf"
-version = "2.0.12+2"
+version = "2.0.20+0"
 
 [deps]
 Libglvnd_jll = "7e76a0d4-f3c7-5321-8279-8d96eeed0f29"
@@ -17,5 +17,5 @@ Xorg_libXext_jll = "1082639a-0dae-5f34-9b06-72781eeb8cb3"
 Xorg_libXinerama_jll = "d1454406-59df-5ea1-beac-c340f2130bc3"
 
 [compat]
-JLLWrappers = "1.1.0"
-julia = "1.0"
+JLLWrappers = "1.2.0"
+julia = "1.6"

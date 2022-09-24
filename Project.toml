@@ -1,6 +1,6 @@
 name = "SDL2_jll"
 uuid = "ab825dc5-c88e-5901-9575-1e5e20358fcf"
-version = "2.0.20+0"
+version = "2.0.20+1"
 
 [deps]
 Libglvnd_jll = "7e76a0d4-f3c7-5321-8279-8d96eeed0f29"
@@ -15,6 +15,7 @@ Xorg_libXScrnSaver_jll = "41e2f9bb-6422-5ff7-a427-aa949331d861"
 Artifacts = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
 Xorg_libXext_jll = "1082639a-0dae-5f34-9b06-72781eeb8cb3"
 Xorg_libXinerama_jll = "d1454406-59df-5ea1-beac-c340f2130bc3"
+alsa_plugins_jll = "5ac2f6bb-493e-5871-9171-112d4c21a6e7"
 
 [compat]
 JLLWrappers = "1.2.0"
